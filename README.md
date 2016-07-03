@@ -1,5 +1,6 @@
 # Super spletna klepetalnica
-
+# Navodila si dobil še naknadno
+# Se nahajajo v poslani pdf datoteki
 2\. domača naloga pri predmetu [Osnove informacijskih sistemov](https://ucilnica1516.fri.uni-lj.si/course/view.php?id=54) (navodila)
 
 ## Opis naloge in navodila
