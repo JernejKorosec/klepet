@@ -1,3 +1,6 @@
+/* global io */
+/* global geslo */
+
 var Klepet = function(socket) {
   this.socket = socket;
 };
@@ -10,10 +13,8 @@ Klepet.prototype.posljiSporocilo = function(kanal, besedilo) {
   this.socket.emit('sporocilo', sporocilo);
 };
 
-Klepet.prototype.spremeniKanal = function(kanal) {
-  this.socket.emit('pridruzitevZahteva', {
-    novKanal: kanal
-  });
+Klepet.prototype.spremeniKanal = function(kanal, geslo) {
+  this.socket.emit('pridruzitevZahteva', {novKanal: kanal, novoGeslo: geslo});
 };
 
 Klepet.prototype.procesirajUkaz = function(ukaz) {
@@ -24,8 +25,18 @@ Klepet.prototype.procesirajUkaz = function(ukaz) {
   switch(ukaz) {
     case 'pridruzitev':
       besede.shift();
-      var kanal = besede.join(' ');
-      this.spremeniKanal(kanal);
+      var data = besede.join(' '); // joina z spacei
+      var kanal_in_geslo = data.split(" ");
+      var theKanal = kanal_in_geslo[0];
+      var parametri = theKanal.split('\"');
+      var kanal_1 = parametri[1];
+      var geslo_1 = '';
+      if(kanal_in_geslo.length > 1){
+        var theGeslo = kanal_in_geslo[1];  
+        var parametri = theGeslo.split('\"');
+        geslo_1 = parametri[1];
+      }
+      this.spremeniKanal(kanal_1,geslo_1);
       break;
     case 'vzdevek':
       besede.shift();

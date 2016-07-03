@@ -1,3 +1,5 @@
+/* global $,io,Klepet*/
+
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
   if (jeSmesko) {
@@ -78,13 +80,27 @@ $(document).ready(function() {
     $('#sporocila').append(novElement);
   });
   
-  socket.on('kanali', function(kanali) {
+  socket.on('kanali', function(data) {
+    
     $('#seznam-kanalov').empty();
 
-    for(var kanal in kanali) {
+    for(var kanal in data.sobe) {
       kanal = kanal.substring(1, kanal.length);
+      var geslo = data.sobeGesla[kanal];
       if (kanal != '') {
-        $('#seznam-kanalov').append(divElementEnostavniTekst(kanal));
+        if(geslo == null)
+        {
+          $('#seznam-kanalov').append(divElementEnostavniTekst(kanal));  
+        }
+        else
+        {
+           var FancyPants =  '<div id="wrapper">'  + 
+                                '<div id="first">'    + "&nbsp" + "</div>" + 
+                                '<div id="second">'   + kanal   + "</div>" +
+                                "</div>";
+            $('#seznam-kanalov').append(FancyPants);
+        }
+        
       }
     }
 

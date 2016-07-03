@@ -44,6 +44,19 @@ a {
   cursor: pointer;
 }
 
+#wrapper {
+    width: 200px;
+    overflow: hidden;
+}
+#first {
+    width: 16px;
+    float:left;
+    background-image: url("../img/Key.png");
+}
+#second {
+    overflow: hidden;
+}
+
 #seznam-kanalov div:hover {
   background-color: #ddd;
 }
