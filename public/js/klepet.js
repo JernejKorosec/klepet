@@ -47,11 +47,22 @@ Klepet.prototype.procesirajUkaz = function(ukaz) {
       besede.shift();
       var besedilo = besede.join(' ');
       var parametri = besedilo.split('\"');
-      if (parametri) {
-        this.socket.emit('sporocilo', { vzdevek: parametri[1], besedilo: parametri[3] });
-        sporocilo = '(zasebno za ' + parametri[1] + '): ' + parametri[3];
-      } else {
-        sporocilo = 'Neznan ukaz';
+      var naslovniki = parametri[1].split(',');
+      for(var i=0, len=naslovniki.length; i < len; i++)			
+      {
+          if (naslovniki[i]) {
+          this.socket.emit('sporocilo', { vzdevek: naslovniki[i], besedilo: parametri[3] });  
+          if(len>1){
+            if(i==0) sporocilo = '(zasebno za ' + naslovniki[i] + '): ' + parametri[3];
+            else     sporocilo += '<br>(zasebno za ' + naslovniki[i] + '): ' + parametri[3];
+          }
+          else{
+          sporocilo = '(zasebno za ' + naslovniki[i] + '): ' + parametri[3];
+          }
+          
+        } else {
+          sporocilo = 'Neznan ukaz';
+        }
       }
       break;
     default:
